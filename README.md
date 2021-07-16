@@ -4,10 +4,10 @@
 
 This repository contains the Latex files and compiled PDF of my Bacholor manuscript.
 
-### Tilte
+## Tilte
 Real-time hair and clothes segmentation on mobile devices
 
-### Abstract 
+## Abstract 
 In recent years, convolutional neural networks have been developing rapidly and solving many challenging tasks in computer vision. In fact, there are numerous possibilities of integrating on beauty and fashion industries with deep learning. One of the thesis's core works, which plays a vital role in intelligent systems for these two industries, is hair and clothes semantic segmentation. The semantic information provided by the semantic segmentation is an understanding of the targeted objects in images, and this scene understanding is vital for many other tasks, such as recommendation systems, augmented reality. 
 
 
