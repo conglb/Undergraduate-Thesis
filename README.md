@@ -1,5 +1,7 @@
 # Undergraduate thesis
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1447124.svg)](http://dx.doi.org/10.13140/RG.2.2.16236.08325)
+
 This repository contains the Latex files and compiled PDF of my Bacholor manuscript.
 
 ### Tilte
