@@ -1,0 +1,46 @@
+\section{Experiments} \label{sec:experiments}
+       
+\input{chapter4/chapter4_1_datasets.tex}
+       
+\subsection{Data preparation}
+
+In a segmentation task, it is typically challenging to obtain an adequate training set of annotated data. The process of annotation is time-consuming, even when support tools are supplied. However, I used three publicly available datasets: DeepFashion2 for the clothes segmentation task, Figaro1k and LFW for the hair segmentation task. All of them are provided publicly; they have already been attached to annotations. However, they are organized differently. \par
+
+\paragraph{DeepFashion2}
+DeepFashion2 is a massive dataset; it has already been divided into the training set, validation set, and test set. The training set has 137.000 images stored in \emph{/image} folder and corresponding annotations located in \emph{/annos} folder, which is adequate for training a deep learning model. However, as the dataset's size is quite big, I read all annotation information and represent them on a Pandas DataFrame. Therefore, the dataset is highly manipulated, and I can easily filter out all data with category\_id bigger than six (because the model only aimed at upper-body clothes recognization). \par
+
+\begin{figure} [H]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.9\textwidth]{chapter4/image/dataframe.png}
+    \caption{Head of DataFrame of DeepFashion2’s trainning set}
+    \label{fig:df}
+\end{figure}
+
+The above figure depicts the format of a DataFrame after synthesized from many JSON annotation files. Each row corresponding to an image has information like image path, category, polygons segmentation… \par
+
+\paragraph{Figaro1k and LFW}
+Figaro1k and LFW are organized into an image folder and an annotation folder. The image folder consists of images under \emph{jpg} extension, while the annotation folder consists of annotations under the bpm extension. Thus, it is more straightforward to read these two datasets when compared to DeepFashion2. Plus, these two datasets are much more lightweight than DeepFashion2. I use OpenCV2 to encode all images and their corresponding annotations; it outputs a Numpy array, which can forward instantly through the neural network. \par
+
+\subsection{Data augmentation}
+Data augmentation is the process of enriching the dataset by applying some transformations to the initial image to generate augmented images. It acts as a regularizer or to speed up convergence, thereby avoid overfitting and improve generalization capabilities. Some image transform operations used in the work are collectively horizontal and vertical flipping, 90-degree rotation, CLAHE, RandomContrast, and RandomGamma. \par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{chapter4/image/augmentation.png}
+    \caption{Illustration for transform operations}
+    \label{fig:augmentation}
+\end{figure}
+
+All of the transformations are composed and applied separately to each image in the dataset with specific probabilities; hence the transformations are guaranteed to apply randomly. As a result, the network sees different data each epoch, and this would generalize the model. \par
+I use the Albumentations library \cite{albumentations}, a Python library, to handle the entire augmentation process.
+
+
+\subsection{Trainning}
+
+The proposed CNN, introduced in \textbf{section \ref{sec:model}}, is implemented by using the Tensorflow framework. The environment used for training is CoLab Pro with 25 GBs of memory, 16 GBs of GPU, and 147 GBs of disk. While the base network load weights pre-trained in the ImageNet dataset, the weights of the rest of the model are initialized randomly.
+\par 
+The model for hair segmentation is trained in the LFW and Figaro1k dataset with Adam optimization with $\beta_{1} = 0.9$ and $\beta_{2} = 0.999$. The learning rate is set to 1e-3, the batch size is 16. The model is trained for 46 epochs with all parameters trainable.
+\par
+Meanwhile, the model for clothes segmentation is trained in the DeepFashion2 dataset with Adam optimization with $\beta_{1} = 0.9$ and $\beta_{2} = 0.999$. The learning rate is set to 1e-3, the batch size is 64. The network is trained for 15 epochs. For the first 10 epochs, the base network is frozen. Later, it is unfreezing in the latter 5 epochs.
+\par

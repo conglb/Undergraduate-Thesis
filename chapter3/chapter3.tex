@@ -1,0 +1,11 @@
+% thiếu: 3.3, 3.2
+% target: 15 pages
+\mychapter{3}{CHAPTER 3. METHODS} \label{ch:chap3} \graphicspath{{./chapter3/image/}}
+
+This chapter proposes a general pipeline for on-device vision applications and a method based on deep learning solving hair segmentation and clothing segmentation tasks. Aside from that, methods for overlaying a mask on a photograph are also demonstrated. \par
+Concerning the pipeline for the Android application, I first list all use cases for the app and then do further analysis on them. With some intricate use cases having many classes involved, sequence diagrams are provided to illustrate how these classes work together. Such generic prototypes can be reused later, whenever camera application development is needed. \par
+In terms of the deep learning model, every component of the proposed network will be explained in this chapter. The proposed method for optimizing the model and converting it to TFLite's supported format will also be presented. The practical performance and accuracy of the proposed method will be discussed in the next chapter.\par
+
+\input{./chapter3/chapter3_1_use_case.tex} % 3
+\input{./chapter3/chapter3_2_proposed_method.tex} % 3
+\input{./chapter3/chapter3_3_android_application.tex} % 3
